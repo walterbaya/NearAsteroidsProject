@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -21,22 +23,20 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-@RestController
-@Configurable
+@Service
 public class RestClient {
 
+	private static final String BASE_URL = "https://api.nasa.gov";
+	private static final String KEY =  "ed1x7CKGHSOBi5R9J7O5AfvXxS4I7gRtpyLB9z2G";
 	private static final Logger LOGGER = LoggerFactory.getLogger(AsteroidsApplication.class);
-
-	@Autowired
-	private WebClient webClient;
-
+	private static final WebClient webClient = WebClient.builder().baseUrl(BASE_URL).build();
 
 	@SuppressWarnings("unchecked")
-	public void getAsteroids() throws Exception {
-		Quote quote = this.webClient.get().uri("/neo/rest/v1/feed?start_date=2022-01-4&end_date=&api_key=ed1x7CKGHSOBi5R9J7O5AfvXxS4I7gRtpyLB9z2G").retrieve().bodyToMono(Quote.class)
+	public void getInfo(String startDate, String endDate) throws Exception {
+		Quote quote = webClient.get().uri("/neo/rest/v1/feed?start_date=" + startDate + "&end_date=" + endDate + "&api_key=" + KEY).retrieve().bodyToMono(Quote.class)
 				.block();
-		Map<String, List<Map<String, Object>>> mapa = (Map<String, List<Map<String, Object>>>) quote
-				.getNear_earth_objects();
+		Map<String, List<Map<String, Object>>> mapa = (Map<String, List<Map<String, Object>>>) quote.getNear_earth_objects();
+		LOGGER.info(mapa.get("2022-01-07").get(0).get("is_potentially_hazardous_asteroid").toString());
 		LOGGER.info(mapa.get("2022-01-07").get(0).get("is_potentially_hazardous_asteroid").toString());
 	}
 	
