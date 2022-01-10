@@ -11,7 +11,7 @@ public class AsteroidsApplication {
 
 	public static void main(String[] args) throws Exception {
 		RestClient r = new RestClient();
-		r.getInfo("2022-01-01", "2022-01-09");
+		r.getInfo("2022-01-01", "2022-01-07");
 		SpringApplication.run(AsteroidsApplication.class, args);
 	}
 

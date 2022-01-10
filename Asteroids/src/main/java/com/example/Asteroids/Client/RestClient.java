@@ -36,8 +36,10 @@ public class RestClient {
 		Quote quote = webClient.get().uri("/neo/rest/v1/feed?start_date=" + startDate + "&end_date=" + endDate + "&api_key=" + KEY).retrieve().bodyToMono(Quote.class)
 				.block();
 		Map<String, List<Map<String, Object>>> mapa = (Map<String, List<Map<String, Object>>>) quote.getNear_earth_objects();
-		LOGGER.info(mapa.get("2022-01-07").get(0).get("is_potentially_hazardous_asteroid").toString());
-		LOGGER.info(mapa.get("2022-01-07").get(0).get("is_potentially_hazardous_asteroid").toString());
+		for (String key: mapa.keySet()) {
+			LOGGER.info(mapa.get(key).get(0).get("is_potentially_hazardous_asteroid").toString());
+		}
+	
 	}
 	
 }
