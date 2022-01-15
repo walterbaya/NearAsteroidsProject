@@ -10,8 +10,6 @@ public class AsteroidsApplication {
 	//public static final Logger LOGGER = LoggerFactory.getLogger(AsteroidsApplication.class);
 
 	public static void main(String[] args) throws Exception {
-		RestClient r = new RestClient();
-		r.getInfo("2022-01-01", "2022-01-07");
 		SpringApplication.run(AsteroidsApplication.class, args);
 	}
 

@@ -34,7 +34,7 @@ public class RestClient {
 	private static final WebClient webClient = WebClient.builder().baseUrl(BASE_URL).build();
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<Asteroid> getInfo(String startDate, String endDate) throws Exception {
+	public static ArrayList<Asteroid> getAsteroids(String startDate, String endDate) throws Exception {
         ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
 		Quote quote = webClient.get().uri("/neo/rest/v1/feed?start_date=" + startDate + "&end_date=" + endDate + "&api_key=" + KEY).retrieve().bodyToMono(Quote.class)
 				.block();
