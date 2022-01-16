@@ -2,11 +2,7 @@ package com.example.Asteroids.model;
 
 import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 public class Asteroid {
     private String id;
     private String neo_reference_id;

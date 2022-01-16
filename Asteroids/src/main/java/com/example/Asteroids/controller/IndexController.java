@@ -13,9 +13,10 @@ public class IndexController {
 
     @GetMapping("/")
     public String greeting(Model model) throws Exception {
-        ArrayList<Asteroid> asteroids = RestClient.getAsteroids("2022-01-1","2022-01-7");
+        ArrayList<Asteroid> asteroids = RestClient.getAsteroids("2022-01-9","2022-01-16");
         model.addAttribute("asteroidName", asteroids.get(0).toString());
         model.addAttribute("numberOfAsteroids", String.valueOf(asteroids.size()));
+        model.addAttribute("asteroids", asteroids);
         return "index";
     }
 
