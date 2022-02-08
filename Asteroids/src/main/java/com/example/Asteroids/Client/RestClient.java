@@ -1,5 +1,6 @@
 package com.example.Asteroids.Client;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,43 +35,64 @@ public class RestClient {
 	private static final WebClient webClient = WebClient.builder().baseUrl(BASE_URL).build();
 
 	@SuppressWarnings("unchecked")
-	public static ArrayList<Asteroid> getAsteroids(String startDate, String endDate) throws Exception {
+	public static ArrayList<Asteroid> getAsteroids(LocalDate startDate, LocalDate endDate, long dateDifference) throws Exception {
+        long numberOfGets = dateDifference / 7;
+        long extraDays = dateDifference % 7;
         ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
-		Quote quote = webClient.get().uri("/neo/rest/v1/feed?start_date=" + startDate + "&end_date=" + endDate + "&api_key=" + KEY).retrieve().bodyToMono(Quote.class)
-				.block();
-		Map<String, List<Map<String, Object>>> mapa = (Map<String, List<Map<String, Object>>>) quote.getNear_earth_objects();
-		for (String key: mapa.keySet()) {
+        Map<String, List<Map<String, Object>>> mapa;
+        int i = 0;
+        LocalDate tempStart = startDate;
+        LocalDate tempEnd = startDate.plusDays(extraDays);
 
-            ArrayList<Map<String,Object>>map2 = (ArrayList<Map<String,Object>>)mapa.get(key).get(0).get("close_approach_data");
-            Map<String, Object> relativeVelocity =(Map<String, Object>)  map2.get(0).get("relative_velocity");
-            Map<String, Object> missDistance =(Map<String, Object>)  map2.get(0).get("miss_distance");
-            Map<String,Object>mapDiameter = (Map<String,Object>)mapa.get(key).get(0).get("estimated_diameter");
-            Map<String,Object>mapMeters = (Map<String,Object>)mapDiameter.get("meters");
-            Map<String,Object>mapFeet = (Map<String,Object>)mapDiameter.get("feet");
+        LOGGER.info("number of gets: " + numberOfGets);
+        LOGGER.info("extra days: " + extraDays);
 
-			Asteroid asteroid = new Asteroid();
-            asteroid.setIsPotentiallyHazardousAsteroid(mapa.get(key).get(0).get("is_potentially_hazardous_asteroid").toString());
-            asteroid.setId(mapa.get(key).get(0).get("id").toString());
-            asteroid.setNeo_reference_id(mapa.get(key).get(0).get("neo_reference_id").toString());
-            asteroid.setName(mapa.get(key).get(0).get("name").toString());
-            asteroid.setNasaJplUrl(mapa.get(key).get(0).get("nasa_jpl_url").toString());
-            asteroid.setAbsoluteMagnitudeH(mapa.get(key).get(0).get("absolute_magnitude_h").toString());
-            asteroid.setIsSentryObject(mapa.get(key).get(0).get("is_sentry_object").toString());
+        while(i <= numberOfGets){
 
-            asteroid.setEstimatedDiameterMinFeet(mapFeet.get("estimated_diameter_min").toString());
-            asteroid.setEstimatedDiameterMinMeters(mapMeters.get("estimated_diameter_min").toString());
-            asteroid.setEstimatedDiameterMaxFeet(mapFeet.get("estimated_diameter_max").toString());
-            asteroid.setEstimatedDiameterMaxMeters(mapMeters.get("estimated_diameter_max").toString());
+            LOGGER.info("temp Start" + tempStart);
+            LOGGER.info("temp End" + tempEnd);
+            LOGGER.info("i value: " + i);
+            Quote quote = webClient.get().uri("/neo/rest/v1/feed?start_date=" + tempStart + "&end_date=" + tempEnd + "&api_key=" + KEY).retrieve().bodyToMono(Quote.class)
+                    .block();
 
-            asteroid.setCloseApproachDateFull(map2.get(0).get("close_approach_date_full").toString());
-            asteroid.setOrbitingBody(map2.get(0).get("orbiting_body").toString());
-            asteroid.setRelativeVelocityKilometersPerHour(relativeVelocity.get("kilometers_per_hour").toString());
-            asteroid.setRelativeVelocityMilesPerHour(relativeVelocity.get("miles_per_hour").toString());
-            asteroid.setMissDistanceKilometers(missDistance.get("kilometers").toString());
-            asteroid.setMissDistanceMiles(missDistance.get("miles").toString());
+            mapa = (Map<String, List<Map<String, Object>>>) quote.getNear_earth_objects();
 
-            asteroids.add(asteroid);
+            for (String key: mapa.keySet()) {
+                ArrayList<Map<String,Object>>map2 = (ArrayList<Map<String,Object>>)mapa.get(key).get(0).get("close_approach_data");
+                Map<String, Object> relativeVelocity =(Map<String, Object>)  map2.get(0).get("relative_velocity");
+                Map<String, Object> missDistance =(Map<String, Object>)  map2.get(0).get("miss_distance");
+                Map<String,Object>mapDiameter = (Map<String,Object>)mapa.get(key).get(0).get("estimated_diameter");
+                Map<String,Object>mapMeters = (Map<String,Object>)mapDiameter.get("meters");
+                Map<String,Object>mapFeet = (Map<String,Object>)mapDiameter.get("feet");
+
+                Asteroid asteroid = new Asteroid();
+                asteroid.setIsPotentiallyHazardousAsteroid(mapa.get(key).get(0).get("is_potentially_hazardous_asteroid").toString());
+                asteroid.setId(mapa.get(key).get(0).get("id").toString());
+                asteroid.setNeo_reference_id(mapa.get(key).get(0).get("neo_reference_id").toString());
+                asteroid.setName(mapa.get(key).get(0).get("name").toString());
+                asteroid.setNasaJplUrl(mapa.get(key).get(0).get("nasa_jpl_url").toString());
+                asteroid.setAbsoluteMagnitudeH(mapa.get(key).get(0).get("absolute_magnitude_h").toString());
+                asteroid.setIsSentryObject(mapa.get(key).get(0).get("is_sentry_object").toString());
+
+                asteroid.setEstimatedDiameterMinFeet(mapFeet.get("estimated_diameter_min").toString());
+                asteroid.setEstimatedDiameterMinMeters(mapMeters.get("estimated_diameter_min").toString());
+                asteroid.setEstimatedDiameterMaxFeet(mapFeet.get("estimated_diameter_max").toString());
+                asteroid.setEstimatedDiameterMaxMeters(mapMeters.get("estimated_diameter_max").toString());
+
+                asteroid.setCloseApproachDateFull(map2.get(0).get("close_approach_date_full").toString());
+                asteroid.setOrbitingBody(map2.get(0).get("orbiting_body").toString());
+                asteroid.setRelativeVelocityKilometersPerHour(relativeVelocity.get("kilometers_per_hour").toString());
+                asteroid.setRelativeVelocityMilesPerHour(relativeVelocity.get("miles_per_hour").toString());
+                asteroid.setMissDistanceKilometers(missDistance.get("kilometers").toString());
+                asteroid.setMissDistanceMiles(missDistance.get("miles").toString());
+
+                asteroids.add(asteroid);
+            }
+            tempStart = tempEnd;
+            tempEnd = tempEnd.plusDays(7);
+            i++;
         }
+
         return asteroids;
 	}
 	
