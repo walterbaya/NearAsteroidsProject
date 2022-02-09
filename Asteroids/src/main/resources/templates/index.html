@@ -25,7 +25,7 @@
 
 <body class="container-fluid p-md-0 m-md-0" id="cover">
     <div class="card text-white">
-        <div class="card-img-overlay px-md-5">
+        <main class="card-img-overlay px-md-5">
             <h1 class="font-big text-center py-4">Near Earth Objects</h1>
             <p class="card-text mt-md-5 px-md-5">Here you can see asteroids, some of them are near earth, some are
                 dangerous
@@ -51,7 +51,8 @@
             </div>
             <h2 class="px-md-5 pb-md-3 px-3 py-md-0 secondary-title mt-3">Number of Near Earth Objects: <span
                     th:text="${numberOfAsteroids}"></span></h2>
-            <h3 class="badge badge-pill badge-danger mx-3 my-3 mb-2 mx-md-5 p-3">Possibly hazardous asteroid.</h3>
+            <h3>Information in the next table is provided by NASA.</h3>
+            <h4 class="badge badge-pill badge-danger mx-3 my-3 mb-2 mx-md-5 p-3">Possibly hazardous asteroid.</h4>
             <div class="d-flex justify-content-center">
                 <table class="table table-responsive table-bordered table-hover border-dark bg-white width-92">
                     <tr>
@@ -83,8 +84,14 @@
                         <td><span th:text="${asteroid.getIsSentryObject()}"></span></td>
                     </tr>
                 </table>
+                <footer>
+                    <p>
+                        All the information you are reading is provided by NASA, this website was made consuming NASA api, anyway, this is not
+                        an official website, for more official information you can visit official websites whom provided better information
+                    </p><a href="https://www.nasa.gov/">Nasa Official website</a>
+                </footer>
             </div>
-        </div>
+        </main>
     </div>
 
 
