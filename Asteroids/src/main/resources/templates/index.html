@@ -7,21 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="icon" type="image/png" href="../static/img/asteroide.png">
     <script src="../static/javascript/index.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
         </script>
     <style th:inline="text">
-        body {
-            background: url("[[@{/}]]img/asteroid.jpg");
+        #cover{
+            background-image: url("[[@{/}]]img/asteroid.jpg");
             background-repeat: no-repeat;
+            background-attachment: fixed;
         }
     </style>
     <link rel="stylesheet" th:inline="text" th:href="@{/css/index.css}">
 </head>
 
-<body class="container-fluid p-md-0 m-md-0">
+<body class="container-fluid p-md-0 m-md-0" id="cover">
     <div class="card text-white">
         <div class="card-img-overlay px-md-5">
             <h1 class="font-big text-center py-4">Near Earth Objects</h1>
@@ -31,7 +31,7 @@
                 made by
                 NASA
                 for big asteroids, so don't worry about them and enjoy the information!.</p>
-            <h1 class="px-md-5 py-4 py-md-0 mt-0">Use dates to find how many asteroids were "near" earth</h1>
+            <h1 class="px-md-5 pb-3 py-md-2 mt-0 secondary-title px-3">Use dates to find how many asteroids were "near" earth</h1>
             <div class="my-md-5 px-md-5 px-3 my-0">
                 <form method="post" th:action="@{/dates}" th:object="${twoDates}">
                     <label class="pl-md-1 form-check-label pb-3">
@@ -44,12 +44,12 @@
                     </label>
                     <br class="d-block d-md-none" />
                     <br class="d-block d-md-none" />
-                    <button type="submit" class="mb-1 btn btn-dark btn border">Let's find asteroids!</button>
+                    <button type="submit" class="mb-1 btn btn-dark">Let's find asteroids!</button>
                 </form>
             </div>
-            <h1 class="px-md-5 pb-md-3 px-3 py-md-0">Number of Near Earth Objects: <span
+            <h1 class="px-md-5 pb-md-3 px-3 py-md-0 secondary-title mt-3">Number of Near Earth Objects: <span
                     th:text="${numberOfAsteroids}"></span></h1>
-            <h1 class="badge badge-pill badge-danger mx-3 mb-2 mx-md-5 p-2">Possibly hazardous asteroid.</h1>
+            <h1 class="badge badge-pill badge-danger mx-3 my-3 mb-2 mx-md-5 p-3">Possibly hazardous asteroid.</h1>
             <div class="d-flex justify-content-center">
                 <table class="table table-responsive table-bordered table-hover border-dark bg-white width-92">
                     <tr>
