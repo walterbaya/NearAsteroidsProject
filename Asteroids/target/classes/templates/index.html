@@ -23,7 +23,7 @@
     <link rel="stylesheet" th:inline="text" th:href="@{/css/index.css}">
 </head>
 
-<body class="container-fluid p-md-0 m-md-0" id="cover">
+<body class="p-md-0 m-md-0" id="cover">
     <div class="card text-white">
         <main class="card-img-overlay px-md-5">
             <h1 class="font-big text-center py-4">Near Earth Objects</h1>
@@ -84,13 +84,15 @@
                         <td><span th:text="${asteroid.getIsSentryObject()}"></span></td>
                     </tr>
                 </table>
-                <footer>
-                    <p>
-                        All the information you are reading is provided by NASA, this website was made consuming NASA api, anyway, this is not
-                        an official website, for more official information you can visit official websites whom provided better information
-                    </p><a href="https://www.nasa.gov/">Nasa Official website</a>
-                </footer>
             </div>
+
+            <footer class="page-footer px-md-5 d-block">
+                <p>
+                    All the information you are reading is provided by NASA, this website was made consuming NASA api, anyway, this is not
+                    an official website, for more official information you can visit official websites whom provided better information
+                </p>
+                <a href="https://www.nasa.gov/">Nasa Official website</a>
+            </footer>
         </main>
     </div>
 
