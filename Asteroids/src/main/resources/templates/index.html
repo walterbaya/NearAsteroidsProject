@@ -23,75 +23,71 @@
     <link rel="stylesheet" th:inline="text" th:href="@{/css/index.css}">
 </head>
 
-<body class="p-md-0 m-md-0">
-    <main class="px-md-5 text-white" id="cover">
-        <h1 class="font-big text-center py-4">Near Earth Objects</h1>
-        <p class="card-text mt-md-5 px-md-5">Here you can see asteroids, some of them are near earth, some are
-            dangerous and others not, but dangerous don't mean that they're going to impact earth is just a
-            classification made by NASA for big asteroids, so don't worry about them and enjoy the information!.
-        </p>
-        <h2 class="px-md-5 pb-3 py-md-2 mt-0 secondary-title px-3">Use dates to find how many asteroids were "near" earth</h2>
-        <div class="my-md-5 px-md-5 px-3 my-0">
-            <form method="post" th:action="@{/dates}" th:object="${twoDates}">
-                <label class="pl-md-1 form-check-label pb-3">
-                    <strong>From:</strong>
-                    <input type="date" name="From" th:field="*{firstDate}" required>
-                </label>
-                <label class="px-md-4 px-0 form-check-label mx-4">
-                    <strong>To:</strong>
-                    <input type="date" name="To" th:field="*{secondDate}" required>
-                </label>
-                <br class="d-block d-md-none" />
-                <br class="d-block d-md-none" />
-                <button type="submit" class="mb-1 btn btn-dark">Let's find asteroids!</button>
-            </form>
-        </div>
-        <h2 class="px-md-5 pb-md-3 px-3 py-md-0 secondary-title mt-3">Number of Near Earth Objects:
-            <span th:text="${numberOfAsteroids}"></span>
-        </h2>
-        <h3>Information in the next table is provided by NASA.</h3>
-        <h4 class="badge badge-pill badge-danger mx-3 my-3 mb-2 mx-md-5 p-3">Possibly hazardous asteroid.</h4>
-        <div class="d-flex justify-content-center">
-            <table class="table table-responsive table-bordered table-hover border-dark bg-white width-92">
-                <tr>
-                    <th>Name</th>
-                    <th>Absolute Magnitude</th>
-                    <th>Estimated Diameter Meters (Mín-Máx)</th>
-                    <th>Orbiting Body</th>
-                    <th>Miss Distance Kilometers</th>
-                    <th>Close Approach Date Full</th>
-                    <th>Relative Velocity Kilometers Per Hour</th>
-                    <th>Is Sentry Object</th>
-                </tr>
-                <tr th:each="asteroid : ${asteroids}"
-                    th:classappend="${asteroid.getIsPotentiallyHazardousAsteroid()} ? 'table-danger' : 'a' ">
+<body class="container-fluid p-md-0 m-md-0" id="cover">
+    <div class="card text-white">
+        <div class="card-img-overlay px-md-5">
+            <h1 class="font-big text-center py-4">Near Earth Objects</h1>
+            <p class="card-text mt-md-5 px-md-5">Here you can see asteroids, some of them are near earth, some are
+                dangerous
+                and others not, but dangerous don't mean that they're going to impact earth is just a classification
+                made by
+                NASA
+                for big asteroids, so don't worry about them and enjoy the information!.</p>
+            <h2 class="px-md-5 pb-3 py-md-2 mt-0 secondary-title px-3">Use dates to find how many asteroids were "near" earth</h2>
+            <div class="my-md-5 px-md-5 px-3 my-0">
+                <form method="post" th:action="@{/dates}" th:object="${twoDates}">
+                    <label class="pl-md-1 form-check-label pb-3">
+                        <strong>From:</strong>
+                        <input type="date" name="From" th:field="*{firstDate}" required>
+                    </label>
+                    <label class="px-md-4 px-0 form-check-label mx-4">
+                        <strong>To:</strong>
+                        <input type="date" name="To" th:field="*{secondDate}" required>
+                    </label>
+                    <br class="d-block d-md-none" />
+                    <br class="d-block d-md-none" />
+                    <button type="submit" class="mb-1 btn btn-dark">Let's find asteroids!</button>
+                </form>
+            </div>
+            <h2 class="px-md-5 pb-md-3 px-3 py-md-0 secondary-title mt-3">Number of Near Earth Objects: <span
+                    th:text="${numberOfAsteroids}"></span></h2>
+            <h3 class="badge badge-pill badge-danger mx-3 my-3 mb-2 mx-md-5 p-3">Possibly hazardous asteroid.</h3>
+            <div class="d-flex justify-content-center">
+                <table class="table table-responsive table-bordered table-hover border-dark bg-white width-92">
+                    <tr>
+                        <th>Name</th>
+                        <th>Absolute Magnitude</th>
+                        <th>Estimated Diameter Meters (Mín-Máx)</th>
+                        <th>Orbiting Body</th>
+                        <th>Miss Distance Kilometers</th>
+                        <th>Close Approach Date Full</th>
+                        <th>Relative Velocity Kilometers Per Hour</th>
+                        <th>Is Sentry Object</th>
+                    </tr>
+                    <tr th:each="asteroid : ${asteroids}"
+                        th:classappend="${asteroid.getIsPotentiallyHazardousAsteroid()} ? 'table-danger' : 'a' ">
 
-                    <td><span th:text="${asteroid.getName()}"></span></td>
-                    <td><span th:text="${asteroid.getAbsoluteMagnitudeH()}"></span></td>
-                    <td>
-                        <span th:text="${asteroid.getEstimatedDiameterMinMeters()}">
-                        </span>
+                        <td><span th:text="${asteroid.getName()}"></span></td>
+                        <td><span th:text="${asteroid.getAbsoluteMagnitudeH()}"></span></td>
+                        <td>
+                            <span th:text="${asteroid.getEstimatedDiameterMinMeters()}">
+                            </span>
                             -
-                        <span th:text="${asteroid.getEstimatedDiameterMaxMeters()}">
-                        </span>
-                    </td>
-                    <td><span th:text="${asteroid.getOrbitingBody()}"></span></td>
-                    <td><span th:text="${asteroid.getMissDistanceKilometers()}"></span></td>
-                    <td><span th:text="${asteroid.getCloseApproachDateFull()}"></span></td>
-                    <td><span th:text="${asteroid.getRelativeVelocityKilometersPerHour()}"></span></td>
-                    <td><span th:text="${asteroid.getIsSentryObject()}"></span></td>
-                </tr>
-            </table>
+                            <span th:text="${asteroid.getEstimatedDiameterMaxMeters()}">
+                            </span>
+                        </td>
+                        <td><span th:text="${asteroid.getOrbitingBody()}"></span></td>
+                        <td><span th:text="${asteroid.getMissDistanceKilometers()}"></span></td>
+                        <td><span th:text="${asteroid.getCloseApproachDateFull()}"></span></td>
+                        <td><span th:text="${asteroid.getRelativeVelocityKilometersPerHour()}"></span></td>
+                        <td><span th:text="${asteroid.getIsSentryObject()}"></span></td>
+                    </tr>
+                </table>
+            </div>
         </div>
-    </main>
-    <!--<footer class="page-footer px-md-5 d-block text-white">
-        <p>
-            All the information you are reading is provided by NASA, this website was made consuming NASA api, anyway, this is not
-            an official website, for more official information you can visit official websites whom provided better information
-        </p>
-        <a href="https://www.nasa.gov/">Nasa Official website</a>
-    </footer>
-    -->
+    </div>
+
+
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
