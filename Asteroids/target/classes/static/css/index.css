@@ -13,21 +13,26 @@ body {
   }
 }
 @media (max-width: 768px) {
+  .font-big {
+    font-size: 4vw;
+  }
+
   .width-92 {
     width: 93% !important;
   }
 
-  .secondary-title {
-    font-size: 4vw;
-    font-weight: bold;
-  }
-
   p {
+    font-size: 2vw;
     padding: 1em;
   }
 
   h1 {
+    font-size: 4vw;
     padding: 0.5em;
+  }
+
+  form, table tr {
+    font-size: 2vw;
   }
 }
 

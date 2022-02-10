@@ -18,17 +18,22 @@ body {
 }
 
 @media (max-width: 768px) {
+    .font-big {
+        font-size: $medium;
+    }
+
     .width-92 {
         width: 93% !important;
     }
-    .secondary-title{
-        font-size: $medium;
-        font-weight: bold;
-    }
     p{
+        font-size: $small;
         padding: 1em;
     }
     h1{
+        font-size: $medium;
         padding: 0.5em;
+    }
+    form, table tr{
+        font-size: $small;
     }
 }
