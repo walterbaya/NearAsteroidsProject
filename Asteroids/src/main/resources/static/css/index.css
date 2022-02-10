@@ -22,17 +22,11 @@ body {
   }
 
   p {
-    font-size: 4vw !important;
     padding: 1em;
   }
 
   h1 {
-    font-size: 8vw !important;
     padding: 0.5em;
-  }
-
-  form, table tr {
-    font-size: 4vw !important;
   }
 }
 
