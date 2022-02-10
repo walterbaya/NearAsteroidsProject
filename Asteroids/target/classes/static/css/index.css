@@ -4,29 +4,13 @@ body {
 }
 
 @media (min-width: 768px) {
-  .font-big {
-    font-size: 8vw;
-  }
-
   .width-92 {
     width: 92% !important;
   }
 }
 @media (max-width: 768px) {
-  .font-big {
-    font-size: 8vw;
-  }
-
   .width-92 {
     width: 93% !important;
-  }
-
-  p {
-    padding: 1em;
-  }
-
-  h1 {
-    padding: 0.5em;
   }
 }
 

@@ -1,35 +1,16 @@
-$big: 8vw;
-$medium: 4vw;
-$small: 2vw;
-
 body {
     background-position: top;
     background-color: black;
 }
 
 @media (min-width: 768px) {
-    .font-big {
-        font-size: $big;
-    }
-
     .width-92 {
         width: 92% !important;
     }
 }
 
 @media (max-width: 768px) {
-    .font-big {
-        font-size: $big;
-    }
-
     .width-92 {
         width: 93% !important;
     }
-    p{
-        padding: 1em;
-    }
-    h1{
-        padding: 0.5em;
-    }
-
 }
